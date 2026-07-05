@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<!-- Belgium Family Atlas · Version 3.0 (Summer 2026 edition) · © 2026 Iman Khajenasiri · Iman.Khajenasiri@gmail.com · Compilation & curation. Underlying attraction data, logos and photos remain © their respective owners/sources. -->
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="author" content="Iman Khajenasiri" />
+<meta name="description" content="Belgium Family Atlas — a filterable guide to family & kids attractions and summer events across Flanders, Wallonia and Brussels. Compiled by Iman Khajenasiri." />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>The Belgium Family Atlas — days out with kids, sorted</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F5F2EA;--paper-2:#EFEBE0;--ink:#1B2331;--ink-soft:#4A5566;--line:#D9D3C4;
+    --fl:#C88A00;--fl-bg:#F7ECCF;--wa:#C6414C;--wa-bg:#F6DCDB;--br:#1E7F86;--br-bg:#D6EBEC;
+    --shadow:0 1px 0 rgba(27,35,49,.06), 0 10px 26px -18px rgba(27,35,49,.55);--radius:14px;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:"Instrument Sans",system-ui,sans-serif;font-size:16px;line-height:1.5;-webkit-font-smoothing:antialiased}
+  a{color:inherit}
+  .wrap{max-width:1180px;margin:0 auto;padding:0 20px}
+
+  header.hero{padding:38px 0 22px;border-bottom:2px solid var(--ink);
+    background:radial-gradient(circle at 12% 0%, rgba(200,138,0,.10), transparent 42%),radial-gradient(circle at 88% 8%, rgba(30,127,134,.10), transparent 45%)}
+  .eyebrow{font-size:12.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-soft);font-weight:600;display:flex;gap:14px;align-items:center;flex-wrap:wrap}
+  .eyebrow .dot{width:6px;height:6px;border-radius:50%;background:var(--wa)}
+  h1{font-family:"Bricolage Grotesque",sans-serif;font-weight:800;font-size:clamp(2.3rem,6vw,4.1rem);line-height:.98;letter-spacing:-.02em;margin:.28em 0 .1em}
+  h1 .pin{color:var(--wa)}
+  .lede{max-width:60ch;color:var(--ink-soft);font-size:1.05rem;margin:.2em 0 1.1em}
+  .keyfacts{display:flex;gap:26px;flex-wrap:wrap;font-size:.9rem}
+  .keyfacts b{font-family:"Bricolage Grotesque",sans-serif;font-size:1.35rem;display:block;font-weight:700}
+  .keyfacts span{color:var(--ink-soft)}
+  .legend{display:flex;gap:8px;flex-wrap:wrap;margin-top:18px}
+  .caveat{margin-top:16px;font-size:.82rem;color:var(--ink-soft);max-width:74ch;border-left:3px solid var(--fl);padding-left:12px}
+
+  .tag{display:inline-flex;align-items:center;gap:6px;font-size:.74rem;font-weight:600;padding:4px 9px;border-radius:999px;border:1px solid transparent;user-select:none;cursor:pointer}
+  .tag.fl{background:var(--fl-bg);color:#7a5500;border-color:#e3c98a}
+  .tag.wa{background:var(--wa-bg);color:#9a2530;border-color:#e6b3b5}
+  .tag.br{background:var(--br-bg);color:#0f5a5f;border-color:#a9d5d7}
+
+  .rail{position:sticky;top:0;z-index:40;background:var(--paper);border-bottom:1px solid var(--line);padding:12px 0;backdrop-filter:blur(6px)}
+  .rail-inner{display:flex;gap:8px;overflow-x:auto;scrollbar-width:thin;padding-bottom:2px}
+  .collect{white-space:nowrap;font-size:.82rem;font-weight:600;padding:7px 13px;border-radius:999px;border:1px solid var(--line);background:#fff;cursor:pointer;color:var(--ink-soft);transition:.14s}
+  .collect:hover{border-color:var(--ink)}
+  .collect.on{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+
+  .tools{padding:20px 0 6px}
+  .searchrow{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+  .search{flex:1;min-width:230px;position:relative}
+  .search input{width:100%;padding:12px 14px 12px 40px;border:1.5px solid var(--ink);border-radius:12px;font:inherit;background:#fff}
+  .search input:focus{outline:3px solid rgba(30,127,134,.35);outline-offset:1px}
+  .search svg{position:absolute;left:13px;top:50%;transform:translateY(-50%);opacity:.55}
+  select{padding:11px 12px;border:1.5px solid var(--line);border-radius:12px;font:inherit;background:#fff;cursor:pointer}
+  select:focus{outline:3px solid rgba(30,127,134,.35)}
+  .toggles{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+  .toggle{font-size:.8rem;font-weight:600;padding:7px 12px;border-radius:999px;border:1px dashed var(--line);background:#fff;cursor:pointer;color:var(--ink-soft);transition:.14s}
+  .toggle:hover{border-style:solid;border-color:var(--ink)}
+  .toggle.on{background:var(--fl-bg);border-color:var(--fl);border-style:solid;color:#7a5500}
+  .resultbar{display:flex;justify-content:space-between;align-items:baseline;margin:20px 0 8px;flex-wrap:wrap;gap:8px}
+  .resultbar .count{font-family:"Bricolage Grotesque",sans-serif;font-weight:700;font-size:1.15rem}
+  .clear{font-size:.82rem;color:var(--wa);cursor:pointer;font-weight:600;background:none;border:none}
+
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px;padding-bottom:40px}
+  .card{background:#fff;border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);display:flex;flex-direction:column;overflow:hidden;position:relative}
+  .banner{position:relative;height:128px;background-size:cover;background-position:center;border-bottom:4px solid var(--line);overflow:hidden}
+  .banner.fl{border-bottom-color:var(--fl)} .banner.wa{border-bottom-color:var(--wa)} .banner.br{border-bottom-color:var(--br)}
+  .banner svg{position:absolute;inset:0;width:100%;height:100%;transition:opacity .3s}
+  .banner.has-photo svg{opacity:0}
+  .banner .rtag{position:absolute;left:10px;top:10px;z-index:2;font-size:.68rem;font-weight:700;letter-spacing:.03em;padding:3px 8px;border-radius:999px;background:rgba(255,255,255,.92);color:var(--ink)}
+  .banner .gemtag{position:absolute;right:10px;top:10px;z-index:2;font-size:.66rem;font-weight:700;padding:3px 8px;border-radius:999px;background:rgba(106,61,134,.92);color:#fff}
+  .body{padding:13px 16px 0;flex:1;display:flex;flex-direction:column}
+  .cat{font-size:.7rem;letter-spacing:.11em;text-transform:uppercase;font-weight:600;color:var(--ink-soft)}
+  .card h3{font-family:"Bricolage Grotesque",sans-serif;font-weight:700;font-size:1.2rem;line-height:1.08;margin:5px 0 3px}
+  .place{font-size:.82rem;color:var(--ink-soft);margin-bottom:9px}
+  .blurb{font-size:.89rem;color:var(--ink);margin:0 0 12px}
+  .chips{display:flex;flex-wrap:wrap;gap:5px;margin-top:auto}
+  .chip{font-size:.71rem;padding:3px 8px;border-radius:7px;background:var(--paper-2);color:var(--ink-soft);font-weight:500}
+  .chip.free{background:#dff0e4;color:#2c7a45}
+  .chip.rain{background:var(--br-bg);color:#0f5a5f}
+  .priceline{display:flex;justify-content:space-between;align-items:center;margin:12px 16px 0;padding-top:11px;border-top:1px dashed var(--line);font-size:.86rem}
+  .price b{font-family:"Bricolage Grotesque",sans-serif}
+  .price .sub{color:var(--ink-soft);font-size:.78rem}
+  .stars{color:var(--fl);letter-spacing:1px;font-size:.82rem;white-space:nowrap}
+  .cardlinks{display:flex;gap:14px;margin:10px 16px 14px}
+  .maplink{font-size:.78rem;font-weight:600;text-decoration:none;border-bottom:1.5px solid var(--fl);padding-bottom:1px}
+  .empty{grid-column:1/-1;text-align:center;padding:60px 20px;color:var(--ink-soft)}
+  .empty b{font-family:"Bricolage Grotesque",sans-serif;font-size:1.2rem;color:var(--ink);display:block;margin-bottom:6px}
+
+  .plans{border-top:2px solid var(--ink);padding:40px 0 60px}
+  .plans h2,.about h2{font-family:"Bricolage Grotesque",sans-serif;font-weight:800;font-size:1.9rem;letter-spacing:-.01em;margin:0 0 6px}
+  .plans .sub{color:var(--ink-soft);margin-bottom:24px}
+  .plangrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:18px}
+  .plan{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:18px 20px;box-shadow:var(--shadow)}
+  .plan .who{font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;font-weight:600;color:var(--wa)}
+  .plan h4{font-family:"Bricolage Grotesque",sans-serif;font-weight:700;font-size:1.15rem;margin:4px 0 10px}
+  .plan ol{margin:0;padding-left:1.1em}
+  .plan li{font-size:.9rem;margin-bottom:7px}
+
+  .about{border-top:1px solid var(--line);padding:36px 0 50px;color:var(--ink-soft);font-size:.9rem}
+  .about h2{color:var(--ink);font-size:1.3rem}
+  .about p{max-width:74ch;margin:.6em 0}
+  footer{border-top:2px solid var(--ink);padding:22px 0 44px;font-size:.8rem;color:var(--ink-soft)}
+
+  @media (max-width:560px){.keyfacts{gap:18px}.grid{grid-template-columns:1fr}h1{font-size:2.4rem}}
+  @media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}.banner svg{transition:none}}
+
+  .credits{padding:34px 0 6px}
+  .creditbox{display:flex;gap:20px;flex-wrap:wrap;justify-content:space-between;align-items:center;
+    background:#fff;border:1px solid var(--line);border-left:6px solid var(--wa);border-radius:var(--radius);
+    box-shadow:var(--shadow);padding:20px 24px}
+  .cb-left{min-width:220px}
+  .cb-badge{display:inline-block;font-size:.7rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
+    background:var(--ink);color:var(--paper);padding:3px 10px;border-radius:999px;margin-bottom:8px}
+  .cb-title{font-family:"Bricolage Grotesque",sans-serif;font-weight:800;font-size:1.35rem;line-height:1}
+  .cb-sub{color:var(--ink-soft);font-size:.86rem;margin-top:3px}
+  .cb-right{font-size:.9rem}
+  .cb-row{display:flex;gap:10px;align-items:baseline;margin-bottom:4px}
+  .cb-row span{color:var(--ink-soft);min-width:82px;font-size:.8rem;text-transform:uppercase;letter-spacing:.04em}
+  .cb-row a{font-weight:600;border-bottom:1.5px solid var(--br);text-decoration:none}
+  .cb-copy{color:var(--ink-soft);font-size:.78rem;margin-top:10px;max-width:52ch;line-height:1.45}
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute"><defs>
+  <linearGradient id="g-fl" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#E8B93E"/><stop offset="1" stop-color="#C88A00"/></linearGradient>
+  <linearGradient id="g-wa" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#DB6670"/><stop offset="1" stop-color="#B7343F"/></linearGradient>
+  <linearGradient id="g-br" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#3AA0A6"/><stop offset="1" stop-color="#156A70"/></linearGradient>
+</defs></svg>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="eyebrow"><span class="dot"></span> A field guide to family days out · Flanders · Wallonia · Brussels · 2026</div>
+    <h1>The Belgium Family <span class="pin">Atlas</span></h1>
+    <p class="lede">A filterable directory of places to take children — from babies to teenagers — across all three regions. Sort by who's coming, the weather, your budget, and how far you'll drive.</p>
+    <div class="keyfacts">
+      <div><b id="statTotal">–</b><span>attractions</span></div>
+      <div><b id="statFree">–</b><span>free or under €20</span></div>
+      <div><b id="statRain">–</b><span>good for rainy days</span></div>
+      <div><b id="statGem">–</b><span>lesser-known gems</span></div>
+    </div>
+    <div class="legend" id="legend">
+      <span class="tag fl" data-region="Flanders">Flanders</span>
+      <span class="tag wa" data-region="Wallonia">Wallonia</span>
+      <span class="tag br" data-region="Brussels">Brussels</span>
+    </div>
+    <p class="caveat">Photos load live from Wikipedia (freely licensed) where a page exists; every other card shows an illustrated banner colour-coded by region. Flagship prices are checked against 2026 tariffs; smaller venues show typical ranges. Prices shift with season, day and online discounts — always confirm on the official site before setting off. The <b>Festivals &amp; Events</b> cards are annual/recurring — dates change every year, so treat any date shown as this year's best guess and confirm before you go.</p>
+  </div>
+</header>
+
+<nav class="rail">
+  <div class="wrap rail-inner" id="collections">
+    <button class="collect on" data-c="all">Everything</button>
+    <button class="collect" data-c="top">Top picks</button>
+    <button class="collect" data-c="free">Free days out</button>
+    <button class="collect" data-c="under20">Under €20</button>
+    <button class="collect" data-c="rain">Rainy-day rescue</button>
+    <button class="collect" data-c="summer">Summer</button>
+    <button class="collect" data-c="winter">Winter</button>
+    <button class="collect" data-c="events">Summer events</button>
+    <button class="collect" data-c="baby">Babies &amp; toddlers</button>
+    <button class="collect" data-c="teen">Teenagers</button>
+    <button class="collect" data-c="gem">Hidden gems</button>
+    <button class="collect" data-c="resort">Weekend stays</button>
+  </div>
+</nav>
+
+<section class="tools wrap">
+  <div class="searchrow">
+    <div class="search">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+      <input id="q" type="search" placeholder="Search a place, town or thing to do…" autocomplete="off" />
+    </div>
+    <select id="fRegion"><option value="">All regions</option><option>Flanders</option><option>Wallonia</option><option>Brussels</option></select>
+    <select id="fCat"><option value="">All categories</option></select>
+    <select id="fAge"><option value="">Any age</option><option value="baby">Baby (0–2)</option><option value="toddler">Toddler (2–5)</option><option value="child">Child (6–12)</option><option value="teen">Teen (13–18)</option></select>
+    <select id="fSet"><option value="">Indoor &amp; outdoor</option><option>Indoor</option><option>Outdoor</option><option>Both</option></select>
+    <select id="fPrice"><option value="">Any price</option><option value="free">Free</option><option value="u20">Under €20 pp</option><option value="2040">€20–40 pp</option><option value="40">€40+ pp</option></select>
+  </div>
+  <div class="toggles" id="toggles">
+    <button class="toggle" data-t="rain">☔ Rainy-day proof</button>
+    <button class="toggle" data-t="tod">🍼 Toddler-friendly</button>
+    <button class="toggle" data-t="strol">👶 Stroller-easy</button>
+    <button class="toggle" data-t="food">🍟 Food on site</button>
+    <button class="toggle" data-t="park">🅿️ Free parking</button>
+    <button class="toggle" data-t="gem">💎 Hidden gem</button>
+  </div>
+  <div class="resultbar">
+    <span class="count"><span id="count">0</span> places</span>
+    <button class="clear" id="clear" style="display:none">Reset all filters ✕</button>
+  </div>
+</section>
+
+<main class="wrap"><div class="grid" id="grid"></div></main>
+
+<section class="plans">
+  <div class="wrap">
+    <h2>Four ready-made trips</h2>
+    <p class="sub">Loose day- or weekend-plans matched to who's in the back seat.</p>
+    <div class="plangrid">
+      <div class="plan"><div class="who">With a baby (0–2)</div><h4>Gentle, shaded, stroller-first</h4><ol>
+        <li><b>ZOO Planckendael</b> — wide flat paths, shade, feeding times.</li>
+        <li><b>Bokrijk</b> — open-air museum with soft-grass playfields.</li>
+        <li><b>De Haan beach</b> — gentle dunes, tram at the door.</li>
+        <li>Rainy swap: <b>Aquatopia</b> — dark, warm, mesmerising tanks.</li></ol></div>
+      <div class="plan"><div class="who">With a toddler (2–5)</div><h4>Characters, animals, short attention spans</h4><ol>
+        <li><b>Plopsaland De Panne</b> — indoor Mayaland beats any weather.</li>
+        <li><b>Pairi Daiza</b> — split over two days; playgrounds throughout.</li>
+        <li><b>Boudewijn Seapark</b> — small rides plus a dolphin show.</li>
+        <li>Rainy swap: <b>Plopsa Indoor Hasselt</b> — a whole park under a roof.</li></ol></div>
+      <div class="plan"><div class="who">Primary school (6–12)</div><h4>Coasters, caves and curious minds</h4><ol>
+        <li><b>Walibi Belgium</b> — mid-size coasters before the big ones.</li>
+        <li><b>Caves of Han</b> — tram, guided cave walk, wolves.</li>
+        <li><b>Technopolis</b> — hundreds of hands-on science stations.</li>
+        <li><b>Euro Space Center</b> — rockets and moon-walk simulators.</li></ol></div>
+      <div class="plan"><div class="who">Teenagers (13–18)</div><h4>Adrenaline and bragging rights</h4><ol>
+        <li><b>Walibi</b> — Kondaa, the tallest, fastest coaster in Benelux.</li>
+        <li><b>Adventure Valley Durbuy</b> — high ropes, kayaking, via ferrata.</li>
+        <li><b>Bobbejaanland</b> — Typhoon and the Fury launch coaster.</li>
+        <li>Down day: <b>kayak the Lesse</b>, or the High Fens on foot.</li></ol></div>
+    </div>
+  </div>
+</section>
+
+<section class="about">
+  <div class="wrap">
+    <h2>How to read this atlas</h2>
+    <p><b>Colour = region.</b> Gold is Flanders, red is Wallonia, teal is Brussels — the coding runs through the pills and the coloured edge of every card, so you can scan by region at a glance.</p>
+    <p><b>The photos.</b> Each card tries to load a freely-licensed image from Wikipedia; where none exists (smaller or newer venues), a category illustration stands in. If a photo ever looks wrong for a place, that's a Wikipedia title mismatch — tell me and I'll pin the right one.</p>
+    <p><b>What "rating" means.</b> A curated family-suitability score (variety for mixed ages, value, pram-ease, weather resilience) — a starting opinion, not an average of public reviews.</p>
+  </div>
+</section>
+
+<section class="credits"><div class="wrap">
+  <div class="creditbox">
+    <div class="cb-left">
+      <span class="cb-badge">Version 3.0 · Summer 2026</span>
+      <div class="cb-title">Belgium Family Atlas</div>
+      <div class="cb-sub" id="cbCount">Attractions &amp; annual events across all three regions</div>
+    </div>
+    <div class="cb-right">
+      <div class="cb-row"><span>Produced by</span><b>Iman Khajenasiri</b></div>
+      <div class="cb-row"><span>Contact</span><a href="mailto:Iman.Khajenasiri@gmail.com">Iman.Khajenasiri@gmail.com</a></div>
+      <div class="cb-copy">© 2026 Iman Khajenasiri — compilation &amp; curation. Underlying attraction details, event listings, logos and photographs remain the property of their respective owners and sources; they are used here for reference only.</div>
+    </div>
+  </div>
+</div></section>
+
+<footer><div class="wrap">Belgium Family Atlas · Version 3.0 · compiled by Iman Khajenasiri · July 2026 · photos load from Wikimedia/Wikipedia under their respective licences · confirm opening days, prices &amp; event dates on official sites before travelling.</div></footer>
+
+<script>
+/* band: free | u20 | 2040 | 40 (cheapest adult online). w = Wikipedia title (optional; "fr:Title" for French). */
+const D=[
+/* THEME PARKS */
+{n:"Plopsaland De Panne",r:"Flanders",p:"West Flanders",m:"De Panne",c:"Theme Park",set:"Both",ages:["toddler","child","teen"],dur:"Full day",a:"€38–56",ch:"€19",band:"40",rain:true,tod:true,teen:true,park:false,food:true,strol:true,gem:false,rate:5,web:"plopsa.com",w:"Plopsaland",b:"Belgium's most-visited park: 55+ rides, Studio 100 characters, big coasters and a huge indoor Mayaland."},
+{n:"Walibi Belgium",r:"Wallonia",p:"Walloon Brabant",m:"Wavre",c:"Theme Park",set:"Outdoor",ages:["child","teen"],dur:"Full day",a:"€48–54",ch:"€44",band:"40",rain:false,tod:false,teen:true,park:false,food:true,strol:true,gem:false,rate:5,web:"walibi.be",w:"Walibi Belgium",b:"The country's biggest thrill park — Kondaa, Mecalodon and the new Dock World zone."},
+{n:"Bellewaerde",r:"Flanders",p:"West Flanders",m:"Ieper",c:"Theme Park",set:"Outdoor",ages:["toddler","child","teen"],dur:"Full day",a:"€35–41",ch:"€35",band:"2040",rain:false,tod:true,teen:true,park:false,food:true,strol:true,gem:false,rate:4,web:"bellewaerde.be",w:"Bellewaerde",b:"Rides plus a genuine zoo — lions, tigers and a walk-through aviary in one ticket."},
+{n:"Bobbejaanland",r:"Flanders",p:"Antwerp",m:"Kasterlee (Lichtaart)",c:"Theme Park",set:"Outdoor",ages:["child","teen"],dur:"Full day",a:"€36–43",ch:"€36",band:"2040",rain:false,tod:false,teen:true,park:false,food:true,strol:true,gem:false,rate:4,web:"bobbejaanland.be",w:"Bobbejaanland",b:"Classic Flemish park with Typhoon, the Fury launch coaster and a spooky indoor dark ride."},
+{n:"Plopsa Coo (Plopsaland Ardennes)",r:"Wallonia",p:"Liège",m:"Stavelot (Coo)",c:"Theme Park",set:"Outdoor",ages:["toddler","child"],dur:"Half day",a:"€30–36",ch:"€30",band:"2040",rain:false,tod:true,teen:false,park:true,food:true,strol:true,gem:true,rate:4,web:"plopsa.com",w:"Plopsa Coo",b:"Smaller Plopsa in the Ardennes beside the Coo waterfalls, with a chairlift up the hill."},
+{n:"Plopsa Indoor Hasselt",r:"Flanders",p:"Limburg",m:"Hasselt",c:"Theme Park",set:"Indoor",ages:["toddler","child"],dur:"Half day",a:"€26–30",ch:"€26",band:"2040",rain:true,tod:true,teen:false,park:true,food:true,strol:true,gem:false,rate:4,web:"plopsa.com",w:"Plopsa Indoor Hasselt",b:"A full indoor theme park — weatherproof rides and shows for younger kids."},
+
+/* WATER & BEACH */
+{n:"Plopsaqua De Panne",r:"Flanders",p:"West Flanders",m:"De Panne",c:"Water & Beach",set:"Both",ages:["toddler","child","teen"],dur:"Half day",a:"€25",ch:"€25",band:"2040",rain:true,tod:true,teen:true,park:false,food:true,strol:true,gem:false,rate:4,web:"plopsa.com",b:"Viking-themed water park with slides, wave pool and toddler splash areas next to Plopsaland."},
+{n:"Plopsaqua Landen-Hannuit",r:"Flanders",p:"Flemish Brabant",m:"Landen",c:"Water & Beach",set:"Indoor",ages:["toddler","child","teen"],dur:"Half day",a:"€23",ch:"€23",band:"2040",rain:true,tod:true,teen:true,park:true,food:true,strol:true,gem:true,rate:4,web:"plopsa.com",b:"The newest Plopsaqua on the Flanders–Wallonia border — slides, wild river and a warm toddler zone."},
+{n:"Aqualibi",r:"Wallonia",p:"Walloon Brabant",m:"Wavre",c:"Water & Beach",set:"Indoor",ages:["child","teen"],dur:"Half day",a:"€26",ch:"€26",band:"2040",rain:true,tod:false,teen:true,park:false,food:true,strol:false,gem:false,rate:4,web:"walibi.be",b:"Tropical indoor water park beside Walibi — flumes, rapids and a warm outdoor pool."},
+{n:"Bellewaerde Aquapark",r:"Flanders",p:"West Flanders",m:"Ieper",c:"Water & Beach",set:"Both",ages:["child","teen"],dur:"Half day",a:"€24",ch:"€24",band:"2040",rain:true,tod:false,teen:true,park:false,food:true,strol:false,gem:true,rate:4,web:"bellewaerde.be",b:"Open-air/indoor slide park; pair it with a theme-park day next door."},
+{n:"Les Lacs de l'Eau d'Heure",r:"Wallonia",p:"Hainaut / Namur",m:"Cerfontaine",c:"Water & Beach",set:"Outdoor",ages:["child","teen"],dur:"Full day",a:"Varies",ch:"Varies",band:"u20",rain:false,tod:false,teen:true,park:true,food:true,strol:false,gem:false,rate:4,web:"lacsdeleaudheure.be",w:"Lakes of the Eau d'Heure",b:"Belgium's biggest lakes — swimming, watersports, a viewing tower and treetop adventure."},
+{n:"Domein Hofstade",r:"Flanders",p:"Flemish Brabant",m:"Zemst",c:"Water & Beach",set:"Outdoor",ages:["baby","toddler","child"],dur:"Half day",a:"Low",ch:"Low",band:"u20",rain:false,tod:true,teen:false,park:true,food:true,strol:true,gem:true,rate:3,web:"sport.vlaanderen",b:"Sandy inland beach and swimming lake with playgrounds — a cheap summer default near Brussels."},
+{n:"Recreatiedomein Zilvermeer",r:"Flanders",p:"Antwerp",m:"Mol",c:"Water & Beach",set:"Outdoor",ages:["toddler","child"],dur:"Half day",a:"Low",ch:"Low",band:"u20",rain:false,tod:true,teen:false,park:true,food:true,strol:true,gem:true,rate:3,web:"zilvermeer.be",b:"Clear swimming lake with sandy shores, pedal boats and cycling trails."},
+{n:"Domein De Ster",r:"Flanders",p:"East Flanders",m:"Sint-Niklaas",c:"Water & Beach",set:"Outdoor",ages:["toddler","child"],dur:"Half day",a:"Low",ch:"Low",band:"u20",rain:false,tod:true,teen:false,park:true,food:true,strol:true,gem:true,rate:3,web:"",b:"Recreation domain with a swimming pond, playground and boat hire — a local summer staple."},
+{n:"Blankenberge Beach & Pier",r:"Flanders",p:"West Flanders",m:"Blankenberge",c:"Water & Beach",set:"Outdoor",ages:["baby","toddler","child","teen"],dur:"Flexible",a:"Free",ch:"Free",band:"free",rain:false,tod:true,teen:true,park:false,food:true,strol:true,gem:false,rate:4,web:"",w:"Blankenberge",b:"Wide family beach, a long pier and an easy seafront promenade with ice-cream everywhere."},
+{n:"Ostend Beach & seafront",r:"Flanders",p:"West Flanders",m:"Oostende",c:"Water & Beach",set:"Outdoor",ages:["baby","toddler","child","teen"],dur:"Flexible",a:"Free",ch:"Free",band:"free",rain:false,tod:true,teen:true,park:false,food:true,strol:true,gem:false,rate:4,web:"",w:"Ostend",b:"Big-city beach with the coastal tram, harbour walks and Earth Explorer nearby."},
+{n:"De Haan Beach",r:"Flanders",p:"West Flanders",m:"De Haan",c:"Water & Beach",set:"Outdoor",ages:["baby","toddler","child"],dur:"Flexible",a:"Free",ch:"Free",band:"free",rain:false,tod:true,teen:false,park:false,food:true,strol:true,gem:true,rate:4,web:"",w:"De Haan",b:"Belle-Époque resort with gentle dunes — the calm, pram-friendly alternative to busy resorts."},
+{n:"Knokke-Heist Beach",r:"Flanders",p:"West Flanders",m:"Knokke-Heist",c:"Water & Beach",set:"Outdoor",ages:["baby","toddler","child","teen"],dur:"Flexible",a:"Free",ch:"Free",band:"free",rain:false,tod:true,teen:true,park:false,food:true,strol:true,gem:false,rate:4,web:"",w:"Knokke-Heist",b:"Broad, upmarket beach with sand-yacht clubs and the Zwin nature park at the far end."},
+{n:"De Panne Beach & sand yachting",r:"Flanders",p:"West Flanders",m:"De Panne",c:"Water & Beach",set:"Outdoor",ages:["child","teen"],dur:"Flexible",a:"Free",ch:"Free",band:"free",rain:false,tod:false,teen:true,park:false,food:true,strol:true,gem:true,rate:3,web:"",b:"The coast's widest, flattest beach — home to land-yachting; lessons run in summer."},
+
+/* ANIMALS */
+{n:"Pairi Daiza",r:"Wallonia",p:"Hainaut",m:"Brugelette",c:"Animals",set:"Both",ages:["toddler","child","teen"],dur:"Full day+",a:"€38–52",ch:"€32–46",band:"40",rain:true,tod:true,teen:true,park:false,food:true,strol:true,gem:false,rate:5,web:"pairidaiza.eu",w:"Pairi Daiza",b:"Repeatedly voted Europe's best zoo: pandas, immersive 'worlds' and the record-breaking Edenya glasshouse. Two days if you can."},
+{n:"ZOO Antwerp",r:"Flanders",p:"Antwerp",m:"Antwerpen",c:"Animals",set:"Both",ages:["baby","toddler","child","teen"],dur:"Half day",a:"~€29",ch:"~€21",band:"2040",rain:true,tod:true,teen:true,park:false,food:true,strol:true,gem:false,rate:5,web:"zooantwerpen.be",w:"Antwerp Zoo",b:"Belgium's oldest zoo, 50 m from Central Station — 950+ species among ornate 19th-century buildings."},
+{n:"ZOO Planckendael",r:"Flanders",p:"Antwerp",m:"Mechelen",c:"Animals",set:"Both",ages:["baby","toddler","child","teen"],dur:"Full day",a:"~€30",ch:"~€22",band:"2040",rain:false,tod:true,teen:true,park:true,food:true,strol:true,gem:false,rate:5,web:"zooplanckendael.be",w:"Planckendael",b:"40 ha of open, continent-by-continent habitats with wide, flat, pram-friendly paths."},
+{n:"Sea Life Blankenberge",r:"Flanders",p:"West Flanders",m:"Blankenberge",c:"Animals",set:"Indoor",ages:["toddler","child"],dur:"1–2h",a:"~€20",ch:"~€17",band:"2040",rain:true,tod:true,teen:false,park:false,food:false,strol:true,gem:false,rate:3,web:"visitsealife.com",b:"Coastal aquarium with a shark tunnel, penguins and a working seal rescue centre."},
+{n:"Aquatopia",r:"Flanders",p:"Antwerp",m:"Antwerpen",c:"Animals",set:"Indoor",ages:["toddler","child"],dur:"1–2h",a:"~€21",ch:"~€17",band:"2040",rain:true,tod:true,teen:false,park:false,food:false,strol:true,gem:true,rate:3,web:"aquatopia.be",b:"Atmospheric aquarium beside Central Station — a perfect warm, dark rainy hour with little ones."},
+{n:"Monde Sauvage",r:"Wallonia",p:"Liège",m:"Aywaille",c:"Animals",set:"Outdoor",ages:["toddler","child","teen"],dur:"Full day",a:"~€27",ch:"~€22",band:"2040",rain:false,tod:true,teen:true,park:true,food:true,strol:true,gem:true,rate:4,web:"mondesauvage.be",b:"Drive/walk-through safari park in the Ardennes with sea-lion and bird-of-prey shows."},
+{n:"Olmense Zoo",r:"Flanders",p:"Antwerp",m:"Balen",c:"Animals",set:"Both",ages:["toddler","child"],dur:"Half day",a:"~€22",ch:"~€19",band:"2040",rain:false,tod:true,teen:false,park:true,food:true,strol:true,gem:true,rate:3,web:"olmensezoo.be",b:"Low-key family zoo where kids get close to the animals; playground and indoor hall."},
+{n:"De Zonnegloed animal refuge",r:"Flanders",p:"West Flanders",m:"Vleteren",c:"Animals",set:"Outdoor",ages:["child","teen"],dur:"Half day",a:"~€16",ch:"~€13",band:"u20",rain:false,tod:false,teen:true,park:true,food:true,strol:true,gem:true,rate:4,web:"zonnegloed.be",b:"Sanctuary for rescued animals — a gentler, story-led alternative to a traditional zoo."},
+{n:"Butterfly Garden Knokke",r:"Flanders",p:"West Flanders",m:"Knokke-Heist",c:"Animals",set:"Indoor",ages:["toddler","child"],dur:"1h",a:"~€12",ch:"~€9",band:"u20",rain:true,tod:true,teen:false,park:false,food:false,strol:true,gem:true,rate:3,web:"",b:"Warm tropical greenhouse full of free-flying butterflies — a quick coastal rainy-day fix."},
+{n:"Het Zwin Nature Park",r:"Flanders",p:"West Flanders",m:"Knokke-Heist",c:"Animals",set:"Both",ages:["toddler","child"],dur:"Half day",a:"~€14",ch:"~€9",band:"u20",rain:false,tod:true,teen:false,park:true,food:true,strol:true,gem:true,rate:4,web:"zwin.be",w:"Zwin",b:"Coastal wetland with an interactive bird centre, walkways and storks nesting overhead."},
+
+/* ADVENTURE */
+{n:"Adventure Valley Durbuy",r:"Wallonia",p:"Luxembourg",m:"Durbuy",c:"Adventure",set:"Both",ages:["child","teen"],dur:"Full day",a:"Varies",ch:"Varies",band:"2040",rain:true,tod:false,teen:true,park:true,food:true,strol:false,gem:false,rate:5,web:"adventure-valley.be",b:"High ropes, kayaking, via ferrata and a big indoor block (laser game, bowling, escape rooms) for bad weather."},
+{n:"Forestia",r:"Wallonia",p:"Liège",m:"Theux",c:"Adventure",set:"Outdoor",ages:["child","teen"],dur:"Half day",a:"~€23",ch:"~€18",band:"2040",rain:false,tod:false,teen:true,park:true,food:true,strol:false,gem:true,rate:4,web:"forestia.be",b:"Ardennes wildlife park plus a treetop rope-course adventure on one ticket."},
+{n:"Karting des Fagnes",r:"Wallonia",p:"Namur",m:"Mariembourg",c:"Adventure",set:"Both",ages:["child","teen"],dur:"1–2h",a:"Varies",ch:"Varies",band:"u20",rain:true,tod:false,teen:true,park:true,food:true,strol:false,gem:true,rate:3,web:"kartingdesfagnes.be",b:"One of Belgium's largest karting centres, with junior karts and an indoor track."},
+{n:"Terhills Resort & Cablepark",r:"Flanders",p:"Limburg",m:"Maasmechelen",c:"Adventure",set:"Both",ages:["child","teen"],dur:"Half–full day",a:"Varies",ch:"Varies",band:"2040",rain:false,tod:false,teen:true,park:true,food:true,strol:false,gem:true,rate:3,web:"terhills.be",b:"Cable wakeboarding, bike trails and a gondola at the gateway to Hoge Kempen park."},
+
+/* INDOOR PLAY */
+{n:"Jump XL trampoline parks",r:"Flanders",p:"Multiple",m:"Antwerp / Brussels / others",c:"Indoor Play",set:"Indoor",ages:["child","teen"],dur:"1–2h",a:"~€16",ch:"~€16",band:"u20",rain:true,tod:false,teen:true,park:true,food:true,strol:false,gem:false,rate:3,web:"jumpxl.com",b:"Chain of big trampoline halls with dodgeball, foam pits and ninja courses — a reliable teen energy-burner."},
+{n:"The Park Playground (VR)",r:"Flanders",p:"Multiple",m:"Antwerp / Brussels / others",c:"Indoor Play",set:"Indoor",ages:["child","teen"],dur:"1h",a:"Varies",ch:"Varies",band:"2040",rain:true,tod:false,teen:true,park:false,food:false,strol:false,gem:true,rate:3,web:"theparkplayground.com",b:"Free-roam virtual-reality arenas — team missions and games; great for older kids and teens."},
+{n:"Serpentarium Blankenberge",r:"Flanders",p:"West Flanders",m:"Blankenberge",c:"Indoor Play",set:"Indoor",ages:["child","teen"],dur:"1h",a:"~€15",ch:"~€12",band:"u20",rain:true,tod:false,teen:true,park:false,food:false,strol:true,gem:true,rate:3,web:"",b:"Reptile house full of snakes and crocodiles — short, warm and a hit with brave kids."},
+
+/* NATURE */
+{n:"Hoge Kempen National Park",r:"Flanders",p:"Limburg",m:"Genk / Maasmechelen",c:"Nature",set:"Outdoor",ages:["child","teen"],dur:"Half–full day",a:"Free",ch:"Free",band:"free",rain:false,tod:false,teen:true,park:true,food:true,strol:false,gem:false,rate:4,web:"nationaalparkhogekempen.be",w:"Hoge Kempen National Park",b:"Belgium's first national park — pine forest, old quarry lakes and gateway visitor hubs with trails."},
+{n:"Hallerbos (Bluebell Forest)",r:"Flanders",p:"Flemish Brabant",m:"Halle",c:"Nature",set:"Outdoor",ages:["baby","toddler","child"],dur:"1–2h",a:"Free",ch:"Free",band:"free",rain:false,tod:true,teen:false,park:true,food:false,strol:false,gem:true,rate:4,web:"hallerbos.be",w:"Hallerbos",b:"For two weeks each April the forest floor turns solid blue with bluebells — an unforgettable spring walk."},
+{n:"Hautes Fagnes (High Fens)",r:"Wallonia",p:"Liège",m:"Waimes / Botrange",c:"Nature",set:"Outdoor",ages:["child","teen"],dur:"Half day",a:"Free",ch:"Free",band:"free",rain:false,tod:false,teen:true,park:true,food:true,strol:false,gem:false,rate:4,web:"botrange.be",w:"High Fens",b:"Belgium's highest, wildest moorland — boardwalk trails, snow in winter, big skies year-round."},
+{n:"Sonian Forest (Zoniënwoud)",r:"Brussels",p:"Brussels-Capital",m:"Brussels / Hoeilaart",c:"Nature",set:"Outdoor",ages:["baby","toddler","child","teen"],dur:"Flexible",a:"Free",ch:"Free",band:"free",rain:false,tod:true,teen:true,park:true,food:false,strol:true,gem:true,rate:3,web:"",w:"Sonian Forest",b:"Vast UNESCO beech forest on the city's edge — flat cycle paths, deer and a canopy walkway nearby."},
+{n:"Botanic Garden Meise",r:"Flanders",p:"Flemish Brabant",m:"Meise",c:"Nature",set:"Both",ages:["baby","toddler","child"],dur:"Half day",a:"~€10",ch:"Free–low",band:"u20",rain:true,tod:true,teen:false,park:true,food:true,strol:true,gem:true,rate:3,web:"plantentuinmeise.be",w:"Meise Botanic Garden",b:"One of the world's largest botanic gardens; a huge glasshouse palace keeps it working in the rain."},
+{n:"Arboretum Kalmthout",r:"Flanders",p:"Antwerp",m:"Kalmthout",c:"Nature",set:"Outdoor",ages:["toddler","child"],dur:"1–2h",a:"~€9",ch:"Low",band:"u20",rain:false,tod:true,teen:false,park:true,food:true,strol:true,gem:true,rate:3,web:"arboretumkalmthout.be",b:"Beautiful tree garden, spectacular in autumn colour and winter-flowering witch hazels."},
+{n:"Kalmthoutse Heide",r:"Flanders",p:"Antwerp",m:"Kalmthout",c:"Nature",set:"Outdoor",ages:["child","teen"],dur:"Half day",a:"Free",ch:"Free",band:"free",rain:false,tod:false,teen:true,park:true,food:true,strol:false,gem:true,rate:3,web:"",b:"Heathland and drifting sand dunes to roam — a cross-border nature reserve with marked trails."},
+{n:"Bosland & Lommel Sahara",r:"Flanders",p:"Limburg",m:"Lommel",c:"Nature",set:"Outdoor",ages:["toddler","child","teen"],dur:"Half day",a:"Free",ch:"Free",band:"free",rain:false,tod:true,teen:true,park:true,food:true,strol:false,gem:true,rate:4,web:"bosland.be",b:"Kids' adventure forest with a climbing tower and a real 'desert' of white sand dunes and a lake."},
+{n:"Gardens of Annevoie",r:"Wallonia",p:"Namur",m:"Anhée",c:"Nature",set:"Outdoor",ages:["toddler","child"],dur:"1–2h",a:"~€12",ch:"~€7",band:"u20",rain:false,tod:true,teen:false,park:true,food:true,strol:true,gem:true,rate:3,web:"annevoie.be",w:"Gardens of Annevoie",b:"18th-century water gardens run entirely without pumps — fountains, canals and shady paths."},
+
+/* MUSEUMS & SCIENCE */
+{n:"Technopolis",r:"Flanders",p:"Antwerp",m:"Mechelen",c:"Museums & Science",set:"Indoor",ages:["toddler","child","teen"],dur:"Half day",a:"~€19",ch:"~€19",band:"u20",rain:true,tod:true,teen:true,park:true,food:true,strol:true,gem:false,rate:5,web:"technopolis.be",b:"Belgium's flagship hands-on science centre — hundreds of experiments kids can actually touch."},
+{n:"Museum of Natural Sciences",r:"Brussels",p:"Brussels-Capital",m:"Brussels",c:"Museums & Science",set:"Indoor",ages:["toddler","child","teen"],dur:"Half day",a:"~€16",ch:"~€10",band:"u20",rain:true,tod:true,teen:true,park:false,food:true,strol:true,gem:false,rate:5,web:"naturalsciences.be",w:"Royal Belgian Institute of Natural Sciences",b:"Europe's biggest dinosaur gallery — a hall of Iguanodon skeletons that stops every child in their tracks."},
+{n:"Train World",r:"Brussels",p:"Brussels-Capital",m:"Schaerbeek",c:"Museums & Science",set:"Indoor",ages:["toddler","child"],dur:"Half day",a:"~€16",ch:"~€9",band:"u20",rain:true,tod:true,teen:false,park:false,food:true,strol:true,gem:false,rate:4,web:"trainworld.be",w:"Train World",b:"Beautifully staged railway museum with historic locomotives you walk right up to."},
+{n:"Autoworld",r:"Brussels",p:"Brussels-Capital",m:"Brussels",c:"Museums & Science",set:"Indoor",ages:["child","teen"],dur:"1–2h",a:"~€15",ch:"~€8",band:"u20",rain:true,tod:false,teen:true,park:false,food:true,strol:true,gem:true,rate:3,web:"autoworld.be",w:"Autoworld (Brussels)",b:"Grand hall of vintage cars under a glass roof in the Cinquantenaire park."},
+{n:"Comics Art Museum",r:"Brussels",p:"Brussels-Capital",m:"Brussels",c:"Museums & Science",set:"Indoor",ages:["child","teen"],dur:"1–2h",a:"~€13",ch:"~€7",band:"u20",rain:true,tod:false,teen:true,park:false,food:true,strol:true,gem:true,rate:3,web:"comicscenter.net",w:"Belgian Comic Strip Center",b:"Home of Tintin and the Smurfs in an Art-Nouveau building — pairs with the city's comic-wall trail."},
+{n:"MAS (Museum aan de Stroom)",r:"Flanders",p:"Antwerp",m:"Antwerpen",c:"Museums & Science",set:"Indoor",ages:["child","teen"],dur:"1–2h",a:"~€12",ch:"Free–low",band:"u20",rain:true,tod:false,teen:true,park:false,food:true,strol:true,gem:true,rate:3,web:"mas.be",w:"Museum aan de Stroom",b:"City-and-port museum whose free rooftop gives the best panorama over Antwerp."},
+{n:"Euro Space Center",r:"Wallonia",p:"Luxembourg",m:"Transinne (Libin)",c:"Museums & Science",set:"Indoor",ages:["child","teen"],dur:"Half–full day",a:"~€19",ch:"~€15",band:"u20",rain:true,tod:false,teen:true,park:true,food:true,strol:true,gem:false,rate:4,web:"eurospacecenter.be",w:"Euro Space Center",b:"Rockets, a moon-walk chair and astronaut-training simulators — plus multi-day space camps."},
+{n:"Cosmodrome (Planetarium Genk)",r:"Flanders",p:"Limburg",m:"Genk",c:"Museums & Science",set:"Indoor",ages:["child","teen"],dur:"1–2h",a:"~€11",ch:"~€9",band:"u20",rain:true,tod:false,teen:true,park:true,food:true,strol:true,gem:true,rate:3,web:"cosmodrome.be",b:"Dome planetarium with immersive star shows — bookend a Hoge Kempen day."},
+{n:"Le Pass — science adventure park",r:"Wallonia",p:"Hainaut",m:"Frameries",c:"Museums & Science",set:"Both",ages:["child","teen"],dur:"Half day",a:"~€13",ch:"~€10",band:"u20",rain:true,tod:false,teen:true,park:true,food:true,strol:true,gem:true,rate:3,web:"pass.be",b:"Science-discovery park in a former colliery — experiments, shows and outdoor play."},
+{n:"Préhistomuseum de Ramioul",r:"Wallonia",p:"Liège",m:"Flémalle",c:"Museums & Science",set:"Both",ages:["child","teen"],dur:"Half day",a:"~€12",ch:"~€8",band:"u20",rain:true,tod:false,teen:true,park:true,food:true,strol:false,gem:true,rate:3,web:"prehisto.museum",b:"Prehistory brought to life — a real cave, fire-making and flint-knapping in the woods."},
+{n:"Gallo-Roman Museum",r:"Flanders",p:"Limburg",m:"Tongeren",c:"Museums & Science",set:"Indoor",ages:["child","teen"],dur:"1–2h",a:"~€10",ch:"Free–low",band:"u20",rain:true,tod:false,teen:true,park:false,food:true,strol:true,gem:true,rate:4,web:"galloromeinsmuseum.be",w:"Gallo-Roman Museum (Tongeren)",b:"Award-winning, kid-clever archaeology museum in Belgium's oldest town."},
+{n:"Hergé Museum",r:"Wallonia",p:"Walloon Brabant",m:"Louvain-la-Neuve",c:"Museums & Science",set:"Indoor",ages:["child","teen"],dur:"1–2h",a:"~€12",ch:"~€6",band:"u20",rain:true,tod:false,teen:true,park:true,food:true,strol:true,gem:true,rate:3,web:"museeherge.com",w:"Hergé Museum",b:"Striking museum devoted to Tintin's creator — best for kids who already love the books."},
+{n:"In Flanders Fields Museum",r:"Flanders",p:"West Flanders",m:"Ieper",c:"Museums & Science",set:"Indoor",ages:["teen"],dur:"1–2h",a:"~€12",ch:"~€6",band:"u20",rain:true,tod:false,teen:true,park:false,food:false,strol:true,gem:false,rate:3,web:"inflandersfields.be",w:"In Flanders Fields Museum",b:"Moving, personal WWI museum in the Cloth Hall — for older children and teenagers."},
+{n:"Bastogne War Museum",r:"Wallonia",p:"Luxembourg",m:"Bastogne",c:"Museums & Science",set:"Indoor",ages:["teen"],dur:"Half day",a:"~€16",ch:"~€10",band:"u20",rain:true,tod:false,teen:true,park:true,food:true,strol:true,gem:false,rate:3,web:"bastognewarmuseum.be",w:"Bastogne War Museum",b:"Immersive Battle-of-the-Bulge museum told through four characters — gripping for teens."},
+{n:"Chocolate Nation",r:"Flanders",p:"Antwerp",m:"Antwerpen",c:"Museums & Science",set:"Indoor",ages:["child","teen"],dur:"1–2h",a:"~€18",ch:"~€14",band:"u20",rain:true,tod:false,teen:true,park:false,food:true,strol:true,gem:true,rate:3,web:"chocolatenation.be",b:"Belgium's biggest chocolate experience — tastings all the way round, by Central Station."},
+{n:"Red Star Line Museum",r:"Flanders",p:"Antwerp",m:"Antwerpen",c:"Museums & Science",set:"Indoor",ages:["child","teen"],dur:"1–2h",a:"~€12",ch:"Free–low",band:"u20",rain:true,tod:false,teen:true,park:false,food:true,strol:true,gem:true,rate:3,web:"redstarline.be",w:"Red Star Line Museum",b:"Emigration museum in the old departure sheds — quietly gripping storytelling for older kids."},
+
+/* SPORTS */
+{n:"Kayak the Lesse",r:"Wallonia",p:"Namur",m:"Anseremme (Dinant)",c:"Sports",set:"Outdoor",ages:["child","teen"],dur:"Half–full day",a:"Varies",ch:"Varies",band:"2040",rain:false,tod:false,teen:true,park:true,food:false,strol:false,gem:false,rate:4,web:"",b:"Classic 12–21 km descent past cliffs and castles — a rite-of-passage summer day for families."},
+{n:"Snow Valley indoor ski",r:"Flanders",p:"Limburg",m:"Peer",c:"Sports",set:"Indoor",ages:["child","teen"],dur:"1–3h",a:"Varies",ch:"Varies",band:"2040",rain:true,tod:false,teen:true,park:true,food:true,strol:false,gem:true,rate:3,web:"",b:"Real-snow indoor slopes for lessons and sledging whatever the season."},
+{n:"Ovifat ski slopes",r:"Wallonia",p:"Liège",m:"Waimes (Ovifat)",c:"Sports",set:"Outdoor",ages:["child","teen"],dur:"Half day",a:"Varies",ch:"Varies",band:"u20",rain:false,tod:false,teen:true,park:true,food:true,strol:false,gem:true,rate:3,web:"",b:"When snow falls in the High Fens, the Ardennes' small lifts open for beginner downhill and cross-country."},
+
+/* RESORTS */
+{n:"Center Parcs De Vossemeren",r:"Flanders",p:"Limburg",m:"Lommel",c:"Resorts",set:"Both",ages:["baby","toddler","child","teen"],dur:"Weekend+",a:"Stay",ch:"Stay",band:"40",rain:true,tod:true,teen:true,park:true,food:true,strol:true,gem:false,rate:4,web:"centerparcs.be",b:"Forest cottages around a tropical Aqua Mundo pool dome — the reliable all-weather family base."},
+{n:"Center Parcs Erperheide",r:"Flanders",p:"Limburg",m:"Peer",c:"Resorts",set:"Both",ages:["baby","toddler","child","teen"],dur:"Weekend+",a:"Stay",ch:"Stay",band:"40",rain:true,tod:true,teen:true,park:true,food:true,strol:true,gem:false,rate:4,web:"centerparcs.be",b:"Sister resort in the Limburg woods with the same pool-dome-and-cottages formula."},
+{n:"Center Parcs Les Ardennes",r:"Wallonia",p:"Luxembourg",m:"Vielsalm",c:"Resorts",set:"Both",ages:["baby","toddler","child","teen"],dur:"Weekend+",a:"Stay",ch:"Stay",band:"40",rain:true,tod:true,teen:true,park:true,food:true,strol:true,gem:false,rate:4,web:"centerparcs.be",b:"The most scenic Belgian village, deep in Ardennes forest and hiking country."},
+{n:"Center Parcs Park De Haan aan Zee",r:"Flanders",p:"West Flanders",m:"De Haan",c:"Resorts",set:"Both",ages:["baby","toddler","child","teen"],dur:"Weekend+",a:"Stay",ch:"Stay",band:"40",rain:true,tod:true,teen:true,park:true,food:true,strol:true,gem:true,rate:3,web:"centerparcs.be",b:"Coastal holiday village a short walk from the dunes — pool dome plus the beach on the doorstep."},
+{n:"Molenheide",r:"Flanders",p:"Limburg",m:"Houthalen-Helchteren",c:"Resorts",set:"Both",ages:["toddler","child","teen"],dur:"Weekend+",a:"Stay / day",ch:"Stay / day",band:"2040",rain:true,tod:true,teen:true,park:true,food:true,strol:true,gem:true,rate:3,web:"molenheide.be",b:"Holiday park with a subtropical pool, deer park and playgrounds — also open for day tickets."},
+{n:"Landal Village l'Eau d'Heure",r:"Wallonia",p:"Namur",m:"Froidchapelle",c:"Resorts",set:"Both",ages:["toddler","child","teen"],dur:"Weekend+",a:"Stay",ch:"Stay",band:"40",rain:false,tod:true,teen:true,park:true,food:true,strol:true,gem:true,rate:3,web:"landal.com",b:"Lakeside holiday village on Belgium's biggest lakes, geared to watersports weekends."},
+
+/* SEASONAL */
+{n:"Winter Wonders Brussels",r:"Brussels",p:"Brussels-Capital",m:"Brussels",c:"Seasonal",set:"Outdoor",ages:["toddler","child","teen"],dur:"Evening",a:"Free entry",ch:"Free entry",band:"free",rain:false,tod:true,teen:true,park:false,food:true,strol:true,gem:false,rate:4,web:"winterwonders.brussels",b:"City-centre Christmas market with a big wheel, ice rink and a Grand-Place light show (late Nov–early Jan)."},
+{n:"Floralia Brussels",r:"Flanders",p:"Flemish Brabant",m:"Groot-Bijgaarden",c:"Seasonal",set:"Both",ages:["baby","toddler","child"],dur:"Half day",a:"~€14",ch:"Low",band:"u20",rain:false,tod:true,teen:false,park:true,food:true,strol:true,gem:true,rate:3,web:"floralia-brussels.be",b:"Spring tulip spectacle in a castle park — a million bulbs, best in April."},
+{n:"Carnival of Binche",r:"Wallonia",p:"Hainaut",m:"Binche",c:"Seasonal",set:"Outdoor",ages:["child","teen"],dur:"Day",a:"Free",ch:"Free",band:"free",rain:false,tod:false,teen:true,park:false,food:true,strol:false,gem:true,rate:3,web:"",w:"Carnival of Binche",b:"UNESCO-listed carnival where masked 'Gilles' throw oranges to the crowd (Shrove Tuesday)."},
+{n:"Haspengouw Blossom (fruit region)",r:"Flanders",p:"Limburg",m:"Sint-Truiden / Borgloon",c:"Seasonal",set:"Outdoor",ages:["baby","toddler","child"],dur:"Half day",a:"Free",ch:"Free",band:"free",rain:false,tod:true,teen:false,park:true,food:true,strol:true,gem:true,rate:3,web:"",b:"Belgium's orchard country turns pink-and-white in April; pick-your-own fruit follows in summer."},
+{n:"Bruges Winter markets & ice",r:"Flanders",p:"West Flanders",m:"Brugge",c:"Seasonal",set:"Both",ages:["toddler","child","teen"],dur:"Half day",a:"Varies",ch:"Varies",band:"u20",rain:true,tod:true,teen:true,park:false,food:true,strol:true,gem:false,rate:3,web:"",b:"Christmas market and an ice rink on the Markt, with the medieval centre as backdrop."},
+
+/* CASTLES & CITY */
+{n:"Atomium",r:"Brussels",p:"Brussels-Capital",m:"Brussels",c:"Castles & City",set:"Indoor",ages:["child","teen"],dur:"1–2h",a:"~€16",ch:"~€8.50",band:"u20",rain:true,tod:false,teen:true,park:true,food:true,strol:true,gem:false,rate:4,web:"atomium.be",w:"Atomium",b:"Belgium's giant 1958 landmark — glass tubes, escalators and a panoramic sphere over the city."},
+{n:"Mini-Europe",r:"Brussels",p:"Brussels-Capital",m:"Brussels",c:"Castles & City",set:"Outdoor",ages:["toddler","child"],dur:"1–2h",a:"~€18",ch:"Free <115cm",band:"u20",rain:false,tod:true,teen:false,park:true,food:true,strol:true,gem:false,rate:4,web:"minieurope.com",w:"Mini-Europe",b:"Europe's landmarks in miniature at the foot of the Atomium — buttons to press everywhere."},
+{n:"Gravensteen Castle",r:"Flanders",p:"East Flanders",m:"Gent",c:"Castles & City",set:"Indoor",ages:["child","teen"],dur:"1–2h",a:"~€13",ch:"Free–low",band:"u20",rain:true,tod:false,teen:true,park:false,food:false,strol:false,gem:false,rate:3,web:"",w:"Gravensteen",b:"A proper moated medieval castle in central Ghent, with a witty audio guide kids enjoy."},
+{n:"Kasteel van Beersel",r:"Flanders",p:"Flemish Brabant",m:"Beersel",c:"Castles & City",set:"Both",ages:["toddler","child"],dur:"1h",a:"~€6",ch:"~€3",band:"u20",rain:false,tod:true,teen:false,park:true,food:false,strol:false,gem:true,rate:3,web:"",w:"Beersel Castle",b:"A picture-book moated brick fortress near Brussels — small, cheap and gloriously castle-shaped."},
+{n:"Château de Vêves",r:"Wallonia",p:"Namur",m:"Celles (Houyet)",c:"Castles & City",set:"Both",ages:["toddler","child"],dur:"1–2h",a:"~€9",ch:"~€6",band:"u20",rain:false,tod:true,teen:false,park:true,food:false,strol:false,gem:true,rate:3,web:"chateau-veves.be",w:"Château de Vêves",b:"A fairytale turreted castle with costumes to try on — combine with the Caves of Han nearby."},
+{n:"Citadel of Namur",r:"Wallonia",p:"Namur",m:"Namur",c:"Castles & City",set:"Both",ages:["child","teen"],dur:"Half day",a:"Low",ch:"Low",band:"u20",rain:false,tod:false,teen:true,park:true,food:true,strol:false,gem:true,rate:3,web:"citadelle.namur.be",w:"Citadel of Namur",b:"Hilltop fortress with underground tunnels, a little tourist train and big river views."},
+{n:"Citadel of Dinant & cable car",r:"Wallonia",p:"Namur",m:"Dinant",c:"Castles & City",set:"Both",ages:["child","teen"],dur:"Half day",a:"~€11",ch:"~€9",band:"u20",rain:false,tod:false,teen:true,park:false,food:true,strol:false,gem:true,rate:3,web:"citadellededinant.be",w:"Citadel of Dinant",b:"Ride the cable car up to a clifftop citadel above the Meuse — combine with a river cruise."},
+{n:"Castle of Bouillon",r:"Wallonia",p:"Luxembourg",m:"Bouillon",c:"Castles & City",set:"Both",ages:["child","teen"],dur:"Half day",a:"~€10",ch:"~€7",band:"u20",rain:false,tod:false,teen:true,park:true,food:true,strol:false,gem:true,rate:4,web:"bouillon-initiative.be",w:"Château de Bouillon",b:"Dramatic medieval fortress with dungeons and a daily falconry show over the valley."},
+{n:"Boudewijn Seapark",r:"Flanders",p:"West Flanders",m:"Brugge",c:"Castles & City",set:"Both",ages:["toddler","child"],dur:"Half day",a:"~€28",ch:"~€28",band:"2040",rain:false,tod:true,teen:false,park:true,food:true,strol:true,gem:false,rate:3,web:"boudewijnseapark.be",w:"Boudewijn Seapark",b:"Bruges amusement park with gentle rides, a dolphinarium and an indoor play hall."},
+{n:"Historium Bruges",r:"Flanders",p:"West Flanders",m:"Brugge",c:"Castles & City",set:"Indoor",ages:["child","teen"],dur:"1–2h",a:"~€18",ch:"~€12",band:"u20",rain:true,tod:false,teen:true,park:false,food:true,strol:true,gem:true,rate:3,web:"historium.be",b:"Immersive walk through medieval Bruges on the Markt — a good rainy hour with VR add-ons."},
+{n:"Bruges by boat & Belfry",r:"Flanders",p:"West Flanders",m:"Brugge",c:"Castles & City",set:"Both",ages:["toddler","child","teen"],dur:"Half day",a:"~€15",ch:"~€8",band:"u20",rain:false,tod:true,teen:true,park:false,food:true,strol:true,gem:false,rate:4,web:"",w:"Belfry of Bruges",b:"A canal boat trip plus (for older legs) 366 steps up the Belfry — the classic Bruges combo."},
+
+/* UNIQUE */
+{n:"Caves of Han (Grottes de Han)",r:"Wallonia",p:"Namur",m:"Rochefort (Han-sur-Lesse)",c:"Unique",set:"Both",ages:["child","teen"],dur:"Half–full day",a:"~€30 combi",ch:"~€22 combi",band:"2040",rain:true,tod:false,teen:true,park:true,food:true,strol:false,gem:false,rate:5,web:"grotte-de-han.be",w:"Han-sur-Lesse",b:"Belgium's finest show cave: a heritage tram in, a guided walk with light shows, plus a wildlife park with wolves and bison."},
+{n:"Caves of Remouchamps",r:"Wallonia",p:"Liège",m:"Aywaille (Remouchamps)",c:"Unique",set:"Indoor",ages:["child","teen"],dur:"1–2h",a:"~€16",ch:"~€12",band:"u20",rain:true,tod:false,teen:true,park:true,food:true,strol:false,gem:true,rate:4,web:"lesgrottes.be",b:"Ends with the world's longest underground boat trip — a magical finale for kids."},
+{n:"Grottes de Neptune",r:"Wallonia",p:"Namur",m:"Couvin",c:"Unique",set:"Indoor",ages:["child","teen"],dur:"1–2h",a:"~€13",ch:"~€9",band:"u20",rain:true,tod:false,teen:true,park:true,food:false,strol:false,gem:true,rate:3,web:"grottesdeneptune.be",b:"Show cave finishing with a boat glide and a sound-and-light show on the underground river."},
+{n:"Blegny-Mine",r:"Wallonia",p:"Liège",m:"Blegny",c:"Unique",set:"Both",ages:["child","teen"],dur:"Half day",a:"~€13",ch:"~€9",band:"u20",rain:true,tod:false,teen:true,park:true,food:true,strol:false,gem:true,rate:4,web:"blegnymine.be",w:"Blegny-Mine",b:"Descend a real UNESCO coal mine by cage lift and mine train — vivid, hands-on history."},
+{n:"C-mine expeditie",r:"Flanders",p:"Limburg",m:"Genk",c:"Unique",set:"Both",ages:["child","teen"],dur:"1–2h",a:"~€12",ch:"~€9",band:"u20",rain:true,tod:false,teen:true,park:true,food:true,strol:false,gem:true,rate:3,web:"c-mine.be",b:"Climb a former mine's winding tower and explore its tunnels on an adventurous self-guided route."},
+{n:"Steam railway of the Three Valleys",r:"Wallonia",p:"Namur",m:"Mariembourg → Treignes",c:"Unique",set:"Both",ages:["toddler","child"],dur:"Half day",a:"Varies",ch:"Varies",band:"u20",rain:false,tod:true,teen:false,park:true,food:false,strol:false,gem:true,rate:3,web:"cfv3v.eu",b:"Ride a real steam train through the Viroin valley — pure delight for a train-mad toddler."},
+{n:"Seafront Zeebrugge",r:"Flanders",p:"West Flanders",m:"Zeebrugge",c:"Unique",set:"Both",ages:["child","teen"],dur:"Half day",a:"~€17",ch:"~€13",band:"u20",rain:true,tod:false,teen:true,park:true,food:true,strol:true,gem:true,rate:3,web:"seafront.be",b:"Maritime theme park where you can climb aboard a real Russian submarine and a lightship."},
+{n:"Bokrijk Open-Air Museum",r:"Flanders",p:"Limburg",m:"Genk",c:"Unique",set:"Both",ages:["baby","toddler","child","teen"],dur:"Full day",a:"~€15",ch:"Free–low",band:"u20",rain:false,tod:true,teen:true,park:true,food:true,strol:true,gem:false,rate:5,web:"bokrijk.be",w:"Bokrijk",b:"Living-history village, huge adventure playground and the famous 'Cycling Through Water' path — a superb all-ages day."},
+{n:"Earth Explorer",r:"Flanders",p:"West Flanders",m:"Oostende",c:"Unique",set:"Indoor",ages:["child","teen"],dur:"1–2h",a:"~€18",ch:"~€14",band:"u20",rain:true,tod:false,teen:true,park:true,food:true,strol:true,gem:true,rate:3,web:"earthexplorer.be",b:"Edutainment centre on earth, wind, fire and water — a solid seaside rainy-day option."},
+{n:"Museum of the Iguanodon",r:"Wallonia",p:"Hainaut",m:"Bernissart",c:"Unique",set:"Indoor",ages:["child","teen"],dur:"1h",a:"Low",ch:"Low",band:"u20",rain:true,tod:false,teen:true,park:true,food:false,strol:true,gem:true,rate:3,web:"",b:"The village where a herd of Iguanodons was found down a coal mine — the root of Belgium's famous dinosaurs."},
+{n:"Kinderboerderij Het Neerhof",r:"Flanders",p:"Flemish Brabant",m:"Dilbeek",c:"Unique",set:"Outdoor",ages:["baby","toddler","child"],dur:"1–2h",a:"Free",ch:"Free",band:"free",rain:false,tod:true,teen:false,park:true,food:false,strol:true,gem:true,rate:3,web:"",b:"A free children's farm near Brussels — goats, chickens and pigs to meet at toddler pace."},
+
+/* FESTIVALS & EVENTS — recurring every year; confirm the exact dates each season */
+{n:"Gentse Feesten (Ghent Festival)",r:"Flanders",p:"East Flanders",m:"Gent",c:"Festivals & Events",set:"Outdoor",ages:["toddler","child","teen"],dur:"17–26 Jul 2026",a:"Free",ch:"Free",band:"free",rain:false,tod:true,teen:true,park:false,food:true,strol:true,gem:false,rate:5,web:"gentsefeesten.stad.gent",w:"Gentse Feesten",b:"Europe's biggest free city festival — ten July days of street theatre, music and dedicated kids' zones across Ghent's medieval centre. Recurs every July."},
+{n:"HAP Food Festival",r:"Flanders",p:"Touring — multiple cities",m:"Bruges · Middelkerke · Nieuwpoort · Tienen…",c:"Festivals & Events",set:"Outdoor",ages:["toddler","child","teen"],dur:"Spring–summer, free",a:"Free",ch:"Free",band:"free",rain:false,tod:true,teen:true,park:false,food:true,strol:true,gem:true,rate:4,web:"hapfestival.be",b:"A touring food-truck festival that pops up in Flemish city parks all spring and summer — free entry, live music and a Bumba children's village for little ones. Nieuwpoort runs 13–16 Aug 2026."},
+{n:"Brussels Flower Carpet",r:"Brussels",p:"Brussels-Capital",m:"Brussels (Grand-Place)",c:"Festivals & Events",set:"Outdoor",ages:["toddler","child","teen"],dur:"Mid-Aug, even years",a:"Free",ch:"Free",band:"free",rain:false,tod:true,teen:true,park:false,food:true,strol:true,gem:false,rate:4,web:"flowercarpet.brussels",w:"Flower Carpet (Brussels)",b:"Every two years (2026 is one) the Grand-Place is carpeted with roughly half a million begonias for a long August weekend. Confirm the exact dates."},
+{n:"Ducasse de Mons (Doudou)",r:"Wallonia",p:"Hainaut",m:"Mons",c:"Festivals & Events",set:"Outdoor",ages:["child","teen"],dur:"Trinity weekend (late May/Jun)",a:"Free",ch:"Free",band:"free",rain:false,tod:false,teen:true,park:false,food:true,strol:false,gem:true,rate:3,web:"",w:"Ducasse de Mons",b:"UNESCO folk spectacle: a golden-carriage procession and the 'Lumeçon', a battle between St George and a dragon in the main square. Recurs every Trinity Sunday."},
+{n:"Zomer van Antwerpen",r:"Flanders",p:"Antwerp",m:"Antwerpen",c:"Festivals & Events",set:"Both",ages:["toddler","child","teen"],dur:"Jul–Aug, annual",a:"Free–low",ch:"Free–low",band:"u20",rain:false,tod:true,teen:true,park:false,food:true,strol:true,gem:true,rate:3,web:"zomervanantwerpen.be",b:"Two months of open-air circus, street theatre and film across the city — much of it free and family-friendly."},
+{n:"Foire du Midi (Zuidfoor)",r:"Brussels",p:"Brussels-Capital",m:"Brussels",c:"Festivals & Events",set:"Outdoor",ages:["child","teen"],dur:"Mid-Jul–mid-Aug",a:"Free entry",ch:"Free entry",band:"u20",rain:false,tod:false,teen:true,park:false,food:true,strol:true,gem:false,rate:3,web:"",w:"fr:Foire du Midi",b:"Belgium's biggest funfair sprawls for a month along the Brussels boulevards — rides, waffles and a giant wheel. Free to walk in, pay per ride."},
+{n:"Sand Sculpture Festival (coast)",r:"Flanders",p:"West Flanders",m:"Coast — venue varies",c:"Festivals & Events",set:"Outdoor",ages:["toddler","child","teen"],dur:"Summer, annual",a:"Varies",ch:"Varies",band:"u20",rain:false,tod:true,teen:true,park:false,food:true,strol:true,gem:true,rate:3,web:"",b:"Giant themed sand sculptures built on the Belgian coast each summer — check which resort is hosting it this year."},
+
+/* --- User-researched Summer 2026 family events (source: I. Khajenasiri compilation from Visit Brussels, UiTinVlaanderen, Visit Gent, VISITWallonia, Visit Oostende & organiser pages) --- */
+{n:"Gent Smaakt",r:"Flanders",p:"East Flanders",m:"Gent",c:"Festivals & Events",set:"Outdoor",ages:["child","teen"],dur:"13–17 May 2026",a:"Varies",ch:"Varies",band:"u20",rain:false,tod:false,teen:true,park:false,food:true,strol:true,gem:false,rate:3,web:"visit.gent.be/nl/agenda/gent-smaakt",b:"Central culinary festival with Ghent restaurants and local producers — good with kids if paired with a city walk and playgrounds."},
+{n:"Foodtruck Festival SMA(A)K – Kortenberg",r:"Flanders",p:"Flemish Brabant",m:"Kortenberg",c:"Festivals & Events",set:"Outdoor",ages:["toddler","child","teen"],dur:"5 Sep 2026",a:"Free entry",ch:"Free entry",band:"free",rain:false,tod:true,teen:false,park:false,food:true,strol:true,gem:true,rate:4,web:"uitinvlaanderen.be/agenda/e/zomer-op-stelten-foodtruckfestival-smaak/f46bb876-68f7-434e-a3d4-b71b888fdd69",b:"Relaxed food-truck festival with big play blocks and bouncy castles for children."},
+{n:"Chefs on Wheels – Tervuren",r:"Flanders",p:"Flemish Brabant",m:"Tervuren",c:"Festivals & Events",set:"Outdoor",ages:["toddler","child","teen"],dur:"18–19 Jul 2026",a:"Free entry",ch:"Free entry",band:"free",rain:false,tod:true,teen:true,park:true,food:true,strol:true,gem:true,rate:4,web:"uitinvlaanderen.be/agenda/e/music-foodtruck-festival-chefs-on-wheels-tervuren/6fdeb27c-5a11-4eb5-ad62-d9e09de4f4c4",b:"Music-and-food-truck festival flagged as family-friendly — handy near Brussels and Leuven."},
+{n:"Damme Beach 2026",r:"Flanders",p:"West Flanders",m:"Damme",c:"Festivals & Events",set:"Outdoor",ages:["toddler","child","teen"],dur:"Summer 2026",a:"Free",ch:"Free",band:"free",rain:false,tod:true,teen:true,park:true,food:true,strol:true,gem:true,rate:4,web:"uitinvlaanderen.be/agenda/e/damme-beach-2026-music-foodtruck-sports-family-festival-gratis-toegang/f192c991-0fa8-4f7f-a09a-155dc6ebd28e",b:"Free summer festival mixing music, food trucks, sports and family activities."},
+{n:"Barrio Cantina 2026",r:"Flanders",p:"West Flanders",m:"Kortrijk",c:"Festivals & Events",set:"Outdoor",ages:["toddler","child","teen"],dur:"26–28 Jun 2026",a:"Free",ch:"Free",band:"free",rain:false,tod:true,teen:true,park:false,food:true,strol:true,gem:true,rate:4,web:"polepole.be/en/events/barrio-cantina-2026",b:"Free all-ages street-food festival with a tropical vibe on Kortrijk Weide."},
+{n:"Theater Aan Zee – WonderWaai",r:"Flanders",p:"West Flanders",m:"Oostende",c:"Festivals & Events",set:"Outdoor",ages:["toddler","child","teen"],dur:"29 Jul–8 Aug 2026",a:"Free",ch:"Free",band:"free",rain:false,tod:true,teen:false,park:false,food:true,strol:true,gem:false,rate:5,web:"visitoostende.be/nl/theater-aan-zee-taz2026",b:"WonderWaai in Leopoldpark is a free family zone — circus, acrobatics, family theatre, workshops and a kids' café."},
+{n:"Circus Boelaere 2026",r:"Flanders",p:"Antwerp",m:"Borgerhout",c:"Festivals & Events",set:"Outdoor",ages:["toddler","child","teen"],dur:"Summer 2026",a:"Free",ch:"Free",band:"free",rain:false,tod:true,teen:false,park:false,food:true,strol:true,gem:true,rate:4,web:"uitinvlaanderen.be/agenda/e/circus-boelaere-2026/5d58fc15-8632-4f07-8e05-9fa52ef56d0c",b:"A summer park day: circus, food trucks, animation and plenty of space for kids to play."},
+{n:"Parkies 2026",r:"Flanders",p:"Multiple cities",m:"Various (e.g. Sint-Niklaas)",c:"Festivals & Events",set:"Outdoor",ages:["child","teen"],dur:"Jul–Aug 2026",a:"Free",ch:"Free",band:"free",rain:false,tod:false,teen:true,park:false,food:true,strol:false,gem:false,rate:3,web:"uitinvlaanderen.be/agenda/e/1407-parkies-2026-tim-seeker-jukebox-heroes-gratis-toegang/934c4d51-49b4-4f66-8a4a-6925a58dfc1a",b:"Free open-air evening concerts in city parks — picnic-friendly, best for relaxed evenings with older kids."},
+{n:"HappyLife Festival",r:"Brussels",p:"Brussels-Capital",m:"Brussels (Ferme Nos Pilifs)",c:"Festivals & Events",set:"Both",ages:["toddler","child","teen"],dur:"22–23 Aug 2026",a:"Low / varies",ch:"Low / varies",band:"u20",rain:false,tod:true,teen:false,park:true,food:true,strol:true,gem:true,rate:5,web:"visit.brussels/en/visitors/event-details.HappyLife-festival.5700021586",b:"Inclusive, sustainable family festival at a care-farm — wander, create, taste and play; strong for younger children."},
+{n:"Brosella Festival 2026",r:"Brussels",p:"Brussels-Capital",m:"Brussels (Ossegempark)",c:"Festivals & Events",set:"Outdoor",ages:["child","teen"],dur:"3–5 Jul 2026",a:"Free",ch:"Free",band:"free",rain:false,tod:false,teen:true,park:true,food:true,strol:true,gem:false,rate:3,web:"visit.brussels/en/visitors/agenda/concerts-shows-exhibitions-culture-outdoor-summer",b:"Open-air music festival in a green park by the Atomium — family-friendly setting rather than kids-specific."},
+{n:"Summer Space Festival 2026",r:"Brussels",p:"Brussels-Capital",m:"Brussels (Tour & Taxis)",c:"Festivals & Events",set:"Both",ages:["child","teen"],dur:"20–21 Jun 2026",a:"Varies",ch:"Varies",band:"u20",rain:false,tod:false,teen:true,park:false,food:true,strol:true,gem:true,rate:4,web:"visit.brussels/en/professionals/event-details.Summer-Space-Festival-2026.5700021742",b:"Daytime space-and-science festival with food on site — fun for curious kids."},
+{n:"Hide & Seek Festival",r:"Brussels",p:"Brussels-Capital",m:"Brussels",c:"Festivals & Events",set:"Both",ages:["child","teen"],dur:"17–22 Aug 2026",a:"Ticketed",ch:"Ticketed",band:"u20",rain:false,tod:false,teen:true,park:false,food:true,strol:false,gem:true,rate:3,web:"visit.brussels/en/visitors/what-to-do/summer-in-brussels",b:"A musical treasure hunt through unusual Brussels venues — better for older kids and teens than toddlers."},
+{n:"Fêtes Romanes",r:"Brussels",p:"Brussels-Capital",m:"Brussels (Wolubilis)",c:"Festivals & Events",set:"Both",ages:["toddler","child","teen"],dur:"September 2026",a:"Free",ch:"Free",band:"free",rain:false,tod:true,teen:false,park:false,food:true,strol:true,gem:true,rate:5,web:"visit.brussels/en/visitors/agenda/brussels-kids-teens",b:"Street theatre, circus acts, puppet shows, dance and poetry — lots of it aimed at children."},
+{n:"BaD Festival",r:"Wallonia",p:"Hainaut",m:"Charleroi",c:"Festivals & Events",set:"Both",ages:["toddler","child","teen"],dur:"May–Aug weekends 2026",a:"Free entry",ch:"Free entry",band:"free",rain:false,tod:true,teen:true,park:true,food:true,strol:true,gem:true,rate:4,web:"visitwallonia.be/fr-be/content/festival-charleroi-le-bad-festival",b:"Wallonia's biggest food-truck gathering — gastronomy, art and culture over a huge space, weekend after weekend."},
+{n:"LaSemo Festival",r:"Wallonia",p:"Hainaut",m:"Enghien",c:"Festivals & Events",set:"Outdoor",ages:["toddler","child","teen"],dur:"10–12 Jul 2026",a:"Ticketed",ch:"Reduced/free young",band:"2040",rain:false,tod:true,teen:true,park:true,food:true,strol:true,gem:false,rate:5,web:"lasemo.be/famille/",b:"Eco-festival that leans hard into families — concerts, street arts, shows and children's animations in a castle park."},
+{n:"Les Médiévales de la Citadelle",r:"Wallonia",p:"Namur",m:"Namur",c:"Festivals & Events",set:"Outdoor",ages:["toddler","child","teen"],dur:"4–5 Jul 2026",a:"Low",ch:"Low",band:"u20",rain:false,tod:true,teen:true,park:true,food:true,strol:false,gem:true,rate:5,web:"visitwallonia.be/fr-be/content/festivites-la-citadelle-de-namur-les-medievales-de-la-citadelle",b:"Medieval village on the citadel — artisans, jousting, acrobatics, tales and children's animations."},
+{n:"Foire de Libramont",r:"Wallonia",p:"Luxembourg",m:"Libramont",c:"Festivals & Events",set:"Both",ages:["toddler","child","teen"],dur:"Summer 2026",a:"Ticketed",ch:"Reduced",band:"u20",rain:false,tod:true,teen:true,park:true,food:true,strol:true,gem:false,rate:5,web:"visitwallonia.be/fr-be/content/foire-libramont-foire-agricole-forestiere-et-agroalimentaire",b:"Huge farm-and-forest fair with a themed playground, animals, parades and an enchanted farm."},
+{n:"Greek Day (Parc d'Enghien)",r:"Wallonia",p:"Hainaut",m:"Enghien",c:"Festivals & Events",set:"Outdoor",ages:["toddler","child","teen"],dur:"Summer 2026",a:"Free",ch:"Free",band:"free",rain:false,tod:true,teen:false,park:true,food:true,strol:true,gem:true,rate:4,web:"visitwallonia.be/fr-be/content/festivite-au-parc-denghien-greek-day",b:"Greek music, Mediterranean food and children's games in Enghien Park."},
+{n:"La vie de château en famille",r:"Wallonia",p:"Across Wallonia",m:"Many castles",c:"Festivals & Events",set:"Both",ages:["toddler","child","teen"],dur:"Summer, annual",a:"Free",ch:"Free",band:"free",rain:false,tod:true,teen:false,park:true,food:false,strol:true,gem:true,rate:5,web:"visitwallonia.be/fr-be/content/visites-partout-en-wallonie-la-vie-de-chateau-en-famille",b:"Free family castle visits across Wallonia — guided tours, treasure hunts, games and playgrounds."},
+{n:"Lesve'Tival",r:"Wallonia",p:"Namur",m:"Profondeville (Lesve)",c:"Festivals & Events",set:"Outdoor",ages:["child","teen"],dur:"Summer 2026",a:"Varies",ch:"Varies",band:"u20",rain:false,tod:false,teen:true,park:true,food:true,strol:true,gem:true,rate:3,web:"visitwallonia.be/fr-be/content/festival-de-musique-profondeville-lesvetival",b:"Weekend music festival in the countryside with food trucks throughout — for families who enjoy outdoor music."},
+{n:"Le Livre en Fête",r:"Wallonia",p:"Liège",m:"Ferrières",c:"Festivals & Events",set:"Outdoor",ages:["toddler","child","teen"],dur:"Summer 2026",a:"Free",ch:"Free",band:"free",rain:false,tod:true,teen:false,park:true,food:true,strol:true,gem:true,rate:4,web:"visitwallonia.be/fr-be/content/salon-litteraire-ferrieres-le-livre-en-fete",b:"Family book festival with storytelling walks, a face-painting workshop, a bar and a food truck."}
+];
+
+/* ---- category illustrations (fallback banners) ---- */
+function art(cat){
+  const I={
+    "Festivals & Events":'<path d="M38 42 Q100 60 162 42" fill="none" stroke="#fff" stroke-width="2.5"/><g fill="#fff"><path d="M50 46 l9 3 -2 10 z"/><path d="M72 51 l9 2 -2 10 z"/><path d="M93 53 l9 1 -1 10 z"/><path d="M114 52 l9 -1 0 10 z"/><path d="M135 49 l9 -2 1 10 z"/></g><g fill="#fff" fill-opacity=".92"><circle cx="66" cy="86" r="3"/><circle cx="134" cy="86" r="3"/><path d="M100 66 l2.5 7 7.5 0 -6 4.5 2.3 7.2 -6.3 -4.5 -6.3 4.5 2.3 -7.2 -6 -4.5 7.5 0 z"/></g>',
+    "Theme Park":'<circle cx="100" cy="56" r="30" fill="none" stroke="#fff" stroke-width="3"/><circle cx="100" cy="56" r="4" fill="#fff"/><g stroke="#fff" stroke-width="2.4"><line x1="100" y1="56" x2="100" y2="26"/><line x1="100" y1="56" x2="100" y2="86"/><line x1="100" y1="56" x2="70" y2="56"/><line x1="100" y1="56" x2="130" y2="56"/><line x1="100" y1="56" x2="79" y2="35"/><line x1="100" y1="56" x2="121" y2="35"/><line x1="100" y1="56" x2="79" y2="77"/><line x1="100" y1="56" x2="121" y2="77"/></g><g fill="#fff"><circle cx="100" cy="26" r="4"/><circle cx="100" cy="86" r="4"/><circle cx="70" cy="56" r="4"/><circle cx="130" cy="56" r="4"/></g><path d="M85 98 L100 62 L115 98 Z" fill="#fff" fill-opacity=".8"/>',
+    "Water & Beach":'<circle cx="150" cy="34" r="13" fill="#fff" fill-opacity=".85"/><g fill="none" stroke="#fff" stroke-width="4" stroke-linecap="round"><path d="M40 66 q12 -12 24 0 t24 0 t24 0 t24 0"/><path d="M40 82 q12 -12 24 0 t24 0 t24 0 t24 0"/><path d="M40 98 q12 -12 24 0 t24 0 t24 0 t24 0"/></g>',
+    "Animals":'<g fill="#fff"><ellipse cx="100" cy="72" rx="17" ry="13"/><circle cx="78" cy="52" r="7"/><circle cx="94" cy="42" r="7.5"/><circle cx="112" cy="42" r="7.5"/><circle cx="126" cy="54" r="7"/></g>',
+    "Adventure":'<path d="M45 96 L82 44 L108 82 L124 60 L156 96 Z" fill="#fff" fill-opacity=".9"/><line x1="82" y1="44" x2="82" y2="24" stroke="#fff" stroke-width="3"/><path d="M82 24 L100 30 L82 36 Z" fill="#fff"/>',
+    "Indoor Play":'<rect x="72" y="70" width="24" height="24" rx="4" fill="#fff"/><rect x="104" y="70" width="24" height="24" rx="4" fill="#fff" fill-opacity=".8"/><rect x="88" y="44" width="24" height="24" rx="4" fill="#fff" fill-opacity=".92"/>',
+    "Nature":'<rect x="96" y="70" width="8" height="26" fill="#fff"/><circle cx="100" cy="52" r="20" fill="#fff" fill-opacity=".92"/><circle cx="80" cy="62" r="13" fill="#fff" fill-opacity=".8"/><circle cx="120" cy="62" r="13" fill="#fff" fill-opacity=".8"/>',
+    "Museums & Science":'<circle cx="100" cy="56" r="6" fill="#fff"/><g fill="none" stroke="#fff" stroke-width="3"><ellipse cx="100" cy="56" rx="34" ry="14"/><ellipse cx="100" cy="56" rx="34" ry="14" transform="rotate(60 100 56)"/><ellipse cx="100" cy="56" rx="34" ry="14" transform="rotate(120 100 56)"/></g>',
+    "Sports":'<path d="M88 30 h24 v10 a12 12 0 0 1 -24 0 z" fill="#fff"/><path d="M112 34 h10 a8 8 0 0 1 -8 12" fill="none" stroke="#fff" stroke-width="3"/><path d="M88 34 h-10 a8 8 0 0 0 8 12" fill="none" stroke="#fff" stroke-width="3"/><rect x="96" y="52" width="8" height="16" fill="#fff"/><rect x="84" y="68" width="32" height="8" rx="3" fill="#fff"/>',
+    "Resorts":'<path d="M70 66 L100 42 L130 66 Z" fill="#fff"/><rect x="78" y="66" width="44" height="30" fill="#fff" fill-opacity=".9"/><rect x="94" y="78" width="12" height="18" fill="#156A70" fill-opacity=".5"/><rect x="140" y="62" width="6" height="34" fill="#fff"/><circle cx="143" cy="54" r="12" fill="#fff" fill-opacity=".85"/>',
+    "Seasonal":'<g stroke="#fff" stroke-width="3" stroke-linecap="round"><line x1="100" y1="30" x2="100" y2="86"/><line x1="76" y1="44" x2="124" y2="72"/><line x1="124" y1="44" x2="76" y2="72"/><g><line x1="100" y1="38" x2="93" y2="45"/><line x1="100" y1="38" x2="107" y2="45"/><line x1="100" y1="78" x2="93" y2="71"/><line x1="100" y1="78" x2="107" y2="71"/></g></g>',
+    "Castles & City":'<path d="M66 96 V54 h8 v-8 h8 v8 h8 v-8 h8 v8 h8 v-8 h8 v8 h8 v42 Z" fill="#fff" fill-opacity=".92"/><rect x="92" y="74" width="16" height="22" fill="#156A70" fill-opacity=".45"/>',
+    "Unique":'<circle cx="100" cy="58" r="30" fill="none" stroke="#fff" stroke-width="3"/><path d="M100 38 L108 58 L100 78 L92 58 Z" fill="#fff"/><circle cx="100" cy="58" r="4" fill="#156A70"/>'
+  };
+  return I[cat]||I["Unique"];
+}
+
+const grid=document.getElementById('grid');
+const rc={Flanders:'fl',Wallonia:'wa',Brussels:'br'};
+const gradId={Flanders:'g-fl',Wallonia:'g-wa',Brussels:'g-br'};
+const imgCache={};
+
+const cats=[...new Set(D.map(d=>d.c))];
+const fCat=document.getElementById('fCat');
+cats.forEach(c=>{const o=document.createElement('option');o.textContent=c;fCat.appendChild(o)});
+
+document.getElementById('statTotal').textContent=D.length;
+document.getElementById('statFree').textContent=D.filter(d=>d.band==='free'||d.band==='u20').length;
+document.getElementById('statRain').textContent=D.filter(d=>d.rain).length;
+document.getElementById('statGem').textContent=D.filter(d=>d.gem).length;
+(function(){const ev=D.filter(d=>d.c==='Festivals & Events').length;const at=D.length-ev;
+  const el=document.getElementById('cbCount');if(el)el.textContent=`${at} attractions · ${ev} summer events · all three regions`;})();
+
+const state={q:'',region:'',cat:'',age:'',set:'',price:'',toggles:new Set(),collection:'all'};
+const collections={all:()=>true,top:d=>d.rate>=5,free:d=>d.band==='free',under20:d=>d.band==='free'||d.band==='u20',
+  rain:d=>d.rain,summer:d=>['Water & Beach','Nature','Adventure','Theme Park','Animals','Sports','Festivals & Events'].includes(d.c),
+  events:d=>d.c==='Festivals & Events',
+  winter:d=>d.rain||d.c==='Seasonal'||d.c==='Sports',baby:d=>d.ages.includes('baby')||d.ages.includes('toddler'),
+  teen:d=>d.ages.includes('teen'),gem:d=>d.gem,resort:d=>d.c==='Resorts'};
+
+function mapURL(d){return 'https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(d.n+' '+d.m+' Belgium');}
+function stars(n){return '★'.repeat(n)+'☆'.repeat(5-n);}
+
+function passes(d){
+  if(state.q){const h=(d.n+' '+d.m+' '+d.p+' '+d.c+' '+d.b).toLowerCase();if(!h.includes(state.q.toLowerCase()))return false;}
+  if(state.region&&d.r!==state.region)return false;
+  if(state.cat&&d.c!==state.cat)return false;
+  if(state.age&&!d.ages.includes(state.age))return false;
+  if(state.set){if(state.set==='Indoor'&&!(d.set==='Indoor'||d.set==='Both'))return false;
+    if(state.set==='Outdoor'&&!(d.set==='Outdoor'||d.set==='Both'))return false;
+    if(state.set==='Both'&&d.set!=='Both')return false;}
+  if(state.price){if(state.price==='free'&&d.band!=='free')return false;
+    if(state.price==='u20'&&!(d.band==='free'||d.band==='u20'))return false;
+    if(state.price==='2040'&&d.band!=='2040')return false;
+    if(state.price==='40'&&d.band!=='40')return false;}
+  for(const t of state.toggles){if(!d[t])return false;}
+  if(!collections[state.collection](d))return false;
+  return true;
+}
+
+function card(d,i){
+  const cls=rc[d.r];
+  const chips=[`<span class="chip">${d.set}</span>`,`<span class="chip">⏱ ${d.dur}</span>`];
+  if(d.rain)chips.push('<span class="chip rain">☔ rainy-ok</span>');
+  if(d.tod)chips.push('<span class="chip">🍼 toddlers</span>');
+  if(d.strol)chips.push('<span class="chip">👶 pram-easy</span>');
+  if(d.band==='free')chips.push('<span class="chip free">free</span>');
+  if(d.c==='Festivals & Events')chips.push('<span class="chip" style="background:#fbe6c8;color:#7a5500">📅 annual — check dates</span>');
+  const web=d.web?` · <a class="maplink" style="border-color:var(--br)" href="https://${d.web}" target="_blank" rel="noopener">Official site ↗</a>`:'';
+  const banner=`<div class="banner ${cls}" data-i="${i}"${d.w?` data-wiki="${encodeURIComponent(d.w)}"`:''}>
+      <span class="rtag">${d.r}</span>${d.gem?'<span class="gemtag">💎 gem</span>':''}
+      <svg viewBox="0 0 200 130" preserveAspectRatio="xMidYMid slice"><rect width="200" height="130" fill="url(#${gradId[d.r]})"/>${art(d.c)}</svg>
+    </div>`;
+  return `<article class="card">
+    ${banner}
+    <div class="body">
+      <div class="cat">${d.c}</div><h3>${d.n}</h3>
+      <div class="place">${d.m}, ${d.p}</div>
+      <p class="blurb">${d.b}</p>
+      <div class="chips">${chips.join('')}</div>
+    </div>
+    <div class="priceline"><span class="price"><b>${d.a}</b> <span class="sub">adult · ${d.ch} child</span></span><span class="stars" title="family rating ${d.rate}/5">${stars(d.rate)}</span></div>
+    <div class="cardlinks"><a class="maplink" href="${mapURL(d)}" target="_blank" rel="noopener">Map ↗</a>${web}</div>
+  </article>`;
+}
+
+function loadPhoto(el){
+  const i=el.dataset.i;
+  if(imgCache[i]==='none')return;
+  if(imgCache[i]){apply(el,imgCache[i]);return;}
+  const wiki=el.dataset.wiki;if(!wiki)return;
+  const raw=decodeURIComponent(wiki);
+  const lang=raw.includes(':')&&raw.indexOf(':')<4?raw.slice(0,raw.indexOf(':')):'en';
+  const title=raw.includes(':')&&raw.indexOf(':')<4?raw.slice(raw.indexOf(':')+1):raw;
+  fetch(`https://${lang}.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(title)}`)
+    .then(r=>r.ok?r.json():Promise.reject())
+    .then(j=>{const s=(j.thumbnail&&j.thumbnail.source)||(j.originalimage&&j.originalimage.source);
+      if(s){imgCache[i]=s;apply(el,s);}else{imgCache[i]='none';}})
+    .catch(()=>{imgCache[i]='none';});
+}
+function apply(el,src){const im=new Image();im.onload=()=>{el.style.backgroundImage=`url("${src}")`;el.classList.add('has-photo');};im.onerror=()=>{imgCache[el.dataset.i]='none';};im.src=src;}
+
+function render(){
+  const list=D.map((d,i)=>({d,i})).filter(x=>passes(x.d)).sort((a,b)=>b.d.rate-a.d.rate||a.d.n.localeCompare(b.d.n));
+  document.getElementById('count').textContent=list.length;
+  grid.innerHTML=list.length?list.map(x=>card(x.d,x.i)).join(''):'<div class="empty"><b>No matches</b>Try loosening a filter — widen the age range or clear the price cap.</div>';
+  grid.querySelectorAll('.banner[data-wiki]').forEach(loadPhoto);
+  const active=state.q||state.region||state.cat||state.age||state.set||state.price||state.toggles.size||state.collection!=='all';
+  document.getElementById('clear').style.display=active?'inline':'none';
+}
+
+document.getElementById('q').addEventListener('input',e=>{state.q=e.target.value;render();});
+document.getElementById('fRegion').addEventListener('change',e=>{state.region=e.target.value;render();});
+fCat.addEventListener('change',e=>{state.cat=e.target.value;render();});
+document.getElementById('fAge').addEventListener('change',e=>{state.age=e.target.value;render();});
+document.getElementById('fSet').addEventListener('change',e=>{state.set=e.target.value;render();});
+document.getElementById('fPrice').addEventListener('change',e=>{state.price=e.target.value;render();});
+document.getElementById('toggles').addEventListener('click',e=>{const b=e.target.closest('.toggle');if(!b)return;const t=b.dataset.t;
+  if(state.toggles.has(t)){state.toggles.delete(t);b.classList.remove('on');}else{state.toggles.add(t);b.classList.add('on');}render();});
+document.getElementById('collections').addEventListener('click',e=>{const b=e.target.closest('.collect');if(!b)return;
+  state.collection=b.dataset.c;document.querySelectorAll('.collect').forEach(x=>x.classList.toggle('on',x===b));render();});
+document.getElementById('legend').addEventListener('click',e=>{const t=e.target.closest('.tag');if(!t)return;
+  const g=t.dataset.region;state.region=state.region===g?'':g;document.getElementById('fRegion').value=state.region;render();});
+document.getElementById('clear').addEventListener('click',()=>{Object.assign(state,{q:'',region:'',cat:'',age:'',set:'',price:'',toggles:new Set(),collection:'all'});
+  document.getElementById('q').value='';['fRegion','fCat','fAge','fSet','fPrice'].forEach(id=>document.getElementById(id).value='');
+  document.querySelectorAll('.toggle').forEach(b=>b.classList.remove('on'));
+  document.querySelectorAll('.collect').forEach(b=>b.classList.toggle('on',b.dataset.c==='all'));render();});
+
+render();
+</script>
+</body>
+</html>
